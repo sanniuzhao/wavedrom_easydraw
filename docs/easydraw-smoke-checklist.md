@@ -14,3 +14,4 @@ Run `npm run editor`, then open `editor/easydraw.html` in a browser and walk thr
 10. Reload the page — diagram restored from localStorage; New — starter after confirm.
 11. Undo/redo across painting, row ops, and bus edits (one undo per drag stroke).
 12. Export SVG / PNG / JSON5 — all three download and open correctly.
+13. Tall diagram (30+ rows via +sig) — scroll the canvas down; hover highlight and clicks still land on the right cells below the fold; bus input appears at the clicked cell.

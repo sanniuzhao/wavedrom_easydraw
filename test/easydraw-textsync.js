@@ -55,3 +55,35 @@ describe('easydraw textsync: editableState (Review Focus 1+2)', function () {
         expect(textsync.editableState({ ok: true, mode: 'readonly' }, false)).to.equal(false);
     });
 });
+
+describe('easydraw textsync: applyTextSync (review fixes 1+4)', function () {
+    it('successful edit parse clears the dirty flag', function () {
+        var r = textsync.applyTextSync(textsync.parseSource('{ signal: [{ name: "a", wave: "p" }] }'));
+        expect(r.dirty).to.equal(false);
+        expect(r.mode).to.equal('edit');
+        expect(r.doc.signal[0].name).to.equal('a');
+    });
+    it('parse error keeps the dirty flag and error message', function () {
+        var r = textsync.applyTextSync(textsync.parseSource('{ signal: ['));
+        expect(r.dirty).to.equal(true);
+        expect(r.error).to.be.a('string');
+    });
+    it('sanitize-failure (empty signal) stays dirty with an error', function () {
+        var r = textsync.applyTextSync(textsync.parseSource('{ signal: [] }'));
+        expect(r.dirty).to.equal(true);
+        expect(r.error).to.be.a('string');
+    });
+    it('readonly docs clear the dirty flag', function () {
+        var r = textsync.applyTextSync(textsync.parseSource('{ assign: [["a","b"]] }'));
+        expect(r.dirty).to.equal(false);
+        expect(r.mode).to.equal('readonly');
+    });
+    it('non-array reg is rejected as a parse error (render crash guard)', function () {
+        expect(textsync.parseSource('{ reg: 5 }').ok).to.equal(false);
+    });
+    it('multi-lane (2D) signal documents parse into readonly mode (review fix 10)', function () {
+        var r = textsync.parseSource('{ signal: [ [ { name: "a", wave: "p" } ] ] }');
+        expect(r.ok).to.equal(true);
+        expect(r.mode).to.equal('readonly');
+    });
+});

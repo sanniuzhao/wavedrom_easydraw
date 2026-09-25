@@ -41,4 +41,9 @@ describe('easydraw geometry', function () {
     it('returns null geometry for trees without a wavelane', function () {
         expect(geometry.extractGeometry(['svg', {}, ['g', {}]], lane)).to.equal(null);
     });
+    it('hscale widens cycle width and hit-testing follows (review fix 5)', function () {
+        var g = geometry.extractGeometry(render({ config: { hscale: 2 }, signal: [{ name: 'clk', wave: 'p.......' }] }), lane);
+        expect(g.cycleWidth).to.equal(2 * lane.xs * 2);
+        expect(geometry.hitTest(g, g.x0 + 2 * g.cycleWidth + 5, g.y0 + 15)).to.deep.equal({ row: 0, cycle: 2 });
+    });
 });

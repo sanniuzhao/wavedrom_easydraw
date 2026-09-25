@@ -8,3 +8,4 @@ wavedrom.js
 wavedrom.min.js
 wavedrom.unpkg.js
 wavedrom.unpkg.min.js
+editor/wavedrom.editor.js

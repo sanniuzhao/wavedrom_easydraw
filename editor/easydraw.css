@@ -8,7 +8,7 @@ body { margin: 0; font: 13px/1.4 Helvetica, Arial, sans-serif; display: flex; fl
 #ed-main { display: flex; flex: 1; min-height: 0; }
 #ed-canvas-wrap { position: relative; flex: 1; overflow: auto; background: #fff; }
 #ed-canvas svg { max-width: 100%; height: auto; display: block; }
-#ed-overlay { position: absolute; inset: 0; cursor: crosshair; }
+#ed-overlay { position: absolute; top: 0; left: 0; cursor: crosshair; }
 #ed-overlay .cell { position: absolute; border: 1px solid rgba(0,100,255,.8); background: rgba(0,100,255,.12); pointer-events: none; display: none; }
 #ed-side { width: 340px; display: flex; flex-direction: column; border-left: 1px solid #ccc; }
 #ed-text { flex: 1; resize: none; border: 0; padding: 8px; font: 12px/1.5 Menlo, Consolas, monospace; }
