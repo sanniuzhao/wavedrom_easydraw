@@ -133,3 +133,44 @@ describe('easydraw model: bus and cycles', function () {
         expect(model.resizeCycles(doc, 0)).to.equal(false);
     });
 });
+
+describe('easydraw model: history', function () {
+    it('undo restores the previous snapshot', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p' }] };
+        var h = model.createHistory();
+        h.commit(doc);
+        doc.signal[0].wave = 'p1';
+        var back = h.undo(doc);
+        expect(back.signal[0].wave).to.equal('p');
+    });
+    it('redo restores the undone change', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p' }] };
+        var h = model.createHistory();
+        h.commit(doc);
+        doc.signal[0].wave = 'p1';
+        h.undo(doc);
+        var fwd = h.redo(doc);
+        expect(fwd.signal[0].wave).to.equal('p1');
+    });
+    it('commit clears the redo stack', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p' }] };
+        var h = model.createHistory();
+        h.commit(doc);
+        doc.signal[0].wave = 'p1';
+        h.undo(doc);
+        doc.signal[0].wave = 'px';
+        h.commit(doc);
+        expect(h.redo(doc)).to.equal(null);
+    });
+    it('undo with empty stack returns null', function () {
+        expect(model.createHistory().undo({ signal: [] })).to.equal(null);
+    });
+    it('snapshots are decoupled from later mutation', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p', data: ['x'] }] };
+        var h = model.createHistory();
+        h.commit(doc);
+        doc.signal[0].data.push('y');
+        var back = h.undo(doc);
+        expect(back.signal[0].data).to.deep.equal(['x']);
+    });
+});
