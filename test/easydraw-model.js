@@ -82,3 +82,54 @@ describe('easydraw model: row management', function () {
         expect(doc.signal[1]).to.deep.equal({});
     });
 });
+
+describe('easydraw model: bus and cycles', function () {
+    it('dataSlots counts = and digit chars', function () {
+        expect(model.dataSlots('x.==.=x')).to.equal(3);
+        expect(model.dataSlots('x.345x')).to.equal(3);
+        expect(model.dataSlots('01.zx|')).to.equal(0);
+    });
+    it('ENGINE LOCK: x.==.=x renders exactly 3 data labels (A,B,C)', function () {
+        var renderAny = require('../lib/render-any.js');
+        var out = renderAny(0, { signal: [{ name: 'D', wave: 'x.==.=x', data: ['A', 'B', 'C', 'E'] }] },
+            require('../skins/default.js'));
+        var labels = [];
+        (function walk (n) {
+            if (!Array.isArray(n)) { return; }
+            if (n[0] === 'text' && n[1].x !== undefined && +n[1].x > 0) {
+                labels.push(JSON.stringify(n.slice(2)));
+            }
+            n.slice(2).forEach(walk);
+        })(out);
+        var hits = labels.filter(function (t) { return /A|B|C/.test(t); });
+        expect(hits.length).to.equal(3);
+    });
+    it('setBusValue writes = and the matching data item', function () {
+        var doc = { signal: [{ name: 'b', wave: 'x.......' }] };
+        model.setBusValue(doc, 0, 2, 'HELLO');
+        expect(doc.signal[0].wave).to.equal('x.=.....');
+        expect(doc.signal[0].data).to.deep.equal(['HELLO']);
+    });
+    it('setBusValue extending beyond data length pads with empty strings', function () {
+        var doc = { signal: [{ name: 'b', wave: 'x.=.....', data: ['A'] }] };
+        model.setBusValue(doc, 0, 5, 'B2');
+        expect(doc.signal[0].wave).to.equal('x.=..=..');
+        expect(doc.signal[0].data).to.deep.equal(['A', 'B2']);
+    });
+    it('resizeCycles pads all waves', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p.' }, { name: 'b', wave: '01' }] };
+        model.resizeCycles(doc, 5);
+        expect(doc.signal[0].wave).to.equal('p....');
+        expect(doc.signal[1].wave).to.equal('01...');
+    });
+    it('resizeCycles trim removes orphaned data items', function () {
+        var doc = { signal: [{ name: 'b', wave: 'x.==.=..', data: ['A', 'B', 'C'] }] };
+        model.resizeCycles(doc, 4);           // wave becomes 'x.==' → 2 slots
+        expect(doc.signal[0].wave).to.equal('x.==');
+        expect(doc.signal[0].data).to.deep.equal(['A', 'B']);
+    });
+    it('resizeCycles refuses zero', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p.' }] };
+        expect(model.resizeCycles(doc, 0)).to.equal(false);
+    });
+});
