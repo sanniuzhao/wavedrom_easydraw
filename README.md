@@ -74,6 +74,20 @@ To export a waveform to PNG, you can use the `@resvg/resvg-js-cli` tool:
 npx wavedrom_easydraw -i source.json5 | npx @resvg/resvg-js-cli - output.png
 ```
 
+## Interactive Editor (easydraw)
+
+Draw timing diagrams with the mouse instead of writing WaveJSON by hand:
+
+```bash
+npm run editor     # builds editor/wavedrom.editor.js
+open editor/easydraw.html
+```
+
+Click cells to paint levels (`0 1 x z`), clocks (`p n P N`), gaps (`|`), and bus
+values; manage signal rows; switch skins; edit `head`/`foot`; two-way sync with
+the WaveJSON text panel; undo/redo; export SVG / PNG / JSON5. The rendering
+engine is unchanged — everything the editor draws is plain WaveJSON.
+
 ## Web usage
 
 **WaveDrom** timing diagrams can be embedded into the web pages, blogs, and wikis to be rendered by the most of modern browsers.
