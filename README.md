@@ -1,16 +1,12 @@
-[![CI](https://github.com/wavedrom/wavedrom/actions/workflows/ci.yml/badge.svg)](https://github.com/wavedrom/wavedrom/actions/workflows/ci.yml)
-[![NPM version](https://img.shields.io/npm/v/wavedrom.svg)](https://www.npmjs.org/package/wavedrom)
-<span class="badge-paypal"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=J6WR5E7TJGSY2&lc=US&item_name=WaveDrom&item_number=github&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" title="Donate to this project using Paypal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg" alt="PayPal donate button" /></a></span>
-[![Coverage Status](https://coveralls.io/repos/github/wavedrom/wavedrom/badge.svg?branch=trunk)](https://coveralls.io/github/wavedrom/wavedrom?branch=trunk)
+# wavedrom_easydraw
 
-<!-- [![Dependency Status](https://david-dm.org/wavedrom/wavedrom.svg)](https://david-dm.org/wavedrom/wavedrom) -->
-<!-- [![Analytics](https://ga-beacon.appspot.com/UA-21660728-4/wavedrom/readme)](http://wavedrom.com) -->
+Digital timing diagram (waveform) rendering engine — a fork of [WaveDrom](http://wavedrom.com) that makes timing diagrams easy to draw.
 
-[EDITOR](http://wavedrom.com/editor.html) | [TUTORIAL](http://wavedrom.com/tutorial.html)
+[EDITOR](http://wavedrom.com/editor.html) | [TUTORIAL](http://wavedrom.com/tutorial.html) | [UPSTREAM](https://github.com/wavedrom/wavedrom)
 
 ## Introduction
 
-**WaveDrom** is a Free and Open Source online digital timing diagram (waveform) rendering engine that uses javascript, HTML5 and SVG to convert a [WaveJSON](https://github.com/wavedrom/schema/blob/master/WaveJSON.md) input text description into SVG vector graphics.
+**wavedrom_easydraw** is a Free and Open Source online digital timing diagram (waveform) rendering engine, forked from **WaveDrom**. It uses javascript, HTML5 and SVG to convert a [WaveJSON](https://github.com/wavedrom/schema/blob/master/WaveJSON.md) input text description into SVG vector graphics.
 
 WaveJSON is an application of the [JSON](http://json.org/) format. The purpose of WaveJSON is to provide a compact exchange format for digital timing diagrams utilized by digital HW / IC engineers.
 
@@ -49,19 +45,19 @@ svg.wavedrom.com
 
 ## CLI
 
-**WaveDrom** can be used from the command line to generate SVG files from JSON5 source.
+**wavedrom_easydraw** can be used from the command line to generate SVG files from JSON5 source.
 
 ### Run with npx
 
 ```bash
-npx wavedrom --input source.json5 > output.svg
+npx wavedrom_easydraw --input source.json5 > output.svg
 ```
 
 ### Global Installation
 
 ```bash
-npm install -g wavedrom
-wavedrom --input source.json5 --indent 2 > output.svg
+npm install -g wavedrom_easydraw
+wavedrom_easydraw --input source.json5 --indent 2 > output.svg
 ```
 
 ### Options
@@ -75,7 +71,7 @@ wavedrom --input source.json5 --indent 2 > output.svg
 To export a waveform to PNG, you can use the `@resvg/resvg-js-cli` tool:
 
 ```bash
-npx wavedrom -i source.json5 | npx @resvg/resvg-js-cli - output.png
+npx wavedrom_easydraw -i source.json5 | npx @resvg/resvg-js-cli - output.png
 ```
 
 ## Web usage

@@ -26,7 +26,7 @@ for (let i = 0; i < args.length; i++) {
     } else if (arg === '-t' || arg === '--indent') {
         argv.indent = args[++i];
     } else if (arg === '-h' || arg === '--help') {
-        console.log('Usage: wavedrom --input <path> [--indent <indent>]');
+        console.log('Usage: wavedrom_easydraw --input <path> [--indent <indent>]');
         process.exit(0);
     } else if (arg === '-v' || arg === '--version') {
         console.log(pkg.version);

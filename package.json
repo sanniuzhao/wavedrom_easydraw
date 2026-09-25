@@ -1,5 +1,5 @@
 {
-  "name": "wavedrom",
+  "name": "wavedrom_easydraw",
   "version": "3.7.0",
   "description": "Digital timing diagram in your browser",
   "homepage": "http://wavedrom.com",
@@ -14,7 +14,7 @@
   },
   "main": "./lib",
   "bin": {
-    "wavedrom": "bin/cli.js"
+    "wavedrom_easydraw": "bin/cli.js"
   },
   "exports": {
     ".": "./lib/index.js",
