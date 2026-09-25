@@ -39,6 +39,8 @@
     "c8": "c8 -r=lcov -r=text mocha test",
     "dist": "esbuild ./lib/wave-drom.js --bundle --format=iife --outfile=wavedrom.js",
     "watch.dist": "esbuild ./lib/wave-drom.js --bundle --format=iife --outfile=wavedrom.js --watch",
+    "editor": "esbuild ./lib/easydraw/editor.js --bundle --format=iife --outfile=editor/wavedrom.editor.js",
+    "watch.editor": "esbuild ./lib/easydraw/editor.js --bundle --format=iife --outfile=editor/wavedrom.editor.js --watch",
     "dist.min": "node -e \"const banner = require('child_process').execSync('node ./bin/header.js < /dev/null').toString(); require('child_process').execSync('esbuild ./lib/wave-drom.js --bundle --format=iife --minify --outfile=wavedrom.min.js --banner:js=\\\"' + banner.trim() + '\\\"')\"",
     "unpkg": "node ./bin/unpkg.js",
     "unpkg.min": "node ./bin/unpkg.js --minify",

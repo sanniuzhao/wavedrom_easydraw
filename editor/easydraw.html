@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>wavedrom_easydraw editor</title>
+<script src="../skins/default.js"></script>
+<script src="../skins/narrow.js"></script>
+<script src="../skins/narrower.js"></script>
+<script src="../skins/narrowerer.js"></script>
+<script src="../skins/dark.js"></script>
+<script src="../skins/lowkey.js"></script>
+<link rel="stylesheet" href="easydraw.css">
+</head>
+<body>
+<header id="ed-toolbar">
+    <span class="ed-group" id="ed-tools"></span>
+    <span class="ed-group" id="ed-rows"></span>
+    <span class="ed-group" id="ed-cycles">
+        <button id="ed-cycle-minus" title="remove cycle">cycle −</button>
+        <span id="ed-cycle-count">0</span>
+        <button id="ed-cycle-plus" title="add cycle">cycle +</button>
+    </span>
+    <span class="ed-group">
+        <select id="ed-skin">
+            <option>default</option><option>narrow</option><option>narrower</option>
+            <option>narrowerer</option><option>dark</option><option>lowkey</option>
+        </select>
+        <input id="ed-head" placeholder="head text">
+        <input id="ed-foot" placeholder="foot text">
+    </span>
+    <span class="ed-group">
+        <button id="ed-undo">↶</button>
+        <button id="ed-redo">↷</button>
+        <button id="ed-new">New</button>
+    </span>
+    <span class="ed-group">
+        <button id="ed-export-svg">SVG</button>
+        <button id="ed-export-png">PNG</button>
+        <button id="ed-export-json">JSON5</button>
+    </span>
+</header>
+<main id="ed-main">
+    <div id="ed-canvas-wrap">
+        <div id="ed-canvas"></div>
+        <div id="ed-overlay"></div>
+        <input id="ed-bus-input" type="text" hidden>
+    </div>
+    <aside id="ed-side">
+        <textarea id="ed-text" spellcheck="false"></textarea>
+        <div id="ed-error"></div>
+    </aside>
+</main>
+<script src="wavedrom.editor.js"></script>
+<script>window.easydrawBoot({
+    canvasId: 'ed-canvas', overlayId: 'ed-overlay', textId: 'ed-text',
+    errorId: 'ed-error', toolbarId: 'ed-toolbar', busInputId: 'ed-bus-input'
+});</script>
+</body>
+</html>
