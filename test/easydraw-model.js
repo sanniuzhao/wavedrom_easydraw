@@ -174,3 +174,21 @@ describe('easydraw model: history', function () {
         expect(back.signal[0].data).to.deep.equal(['x']);
     });
 });
+
+describe('easydraw model: sanitize (Review Focus 5)', function () {
+    it('fills missing wave with empty string', function () {
+        var doc = model.sanitizeSignalDoc({ signal: [{ name: 'a' }] });
+        expect(doc.signal[0].wave).to.equal('');
+    });
+    it('drops non-signal roots', function () {
+        expect(model.sanitizeSignalDoc({ assign: [] })).to.equal(null);
+        expect(model.sanitizeSignalDoc(5)).to.equal(null);
+    });
+    it('rejects empty signal arrays', function () {
+        expect(model.sanitizeSignalDoc({ signal: [] })).to.equal(null);
+    });
+    it('coerces wave to string', function () {
+        var doc = model.sanitizeSignalDoc({ signal: [{ name: 'a', wave: 123 }] });
+        expect(doc.signal[0].wave).to.equal('123');
+    });
+});
