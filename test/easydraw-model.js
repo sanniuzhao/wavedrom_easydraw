@@ -39,3 +39,46 @@ describe('easydraw model: wave chars', function () {
         expect(JSON.parse(model.serialize(doc))).to.deep.equal(doc);
     });
 });
+
+describe('easydraw model: row management', function () {
+    it('addSignal inserts a padded row after the given index', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p...' }] };
+        model.addSignal(doc, 0);
+        expect(doc.signal.length).to.equal(2);
+        expect(doc.signal[1].wave).to.equal('....');
+        expect(doc.signal[1].name).to.equal('sig');
+    });
+    it('addSignal makes names unique', function () {
+        var doc = { signal: [{ name: 'sig', wave: 'p' }, { name: 'sig2', wave: 'p' }] };
+        model.addSignal(doc, 1);
+        expect(doc.signal[2].name).to.equal('sig3');
+    });
+    it('removeSignal refuses to empty the signal list', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p' }] };
+        expect(model.removeSignal(doc, 0)).to.equal(false);
+        expect(doc.signal.length).to.equal(1);
+    });
+    it('removeSignal removes and returns true', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p' }, { name: 'b', wave: 'p' }] };
+        expect(model.removeSignal(doc, 0)).to.equal(true);
+        expect(doc.signal[0].name).to.equal('b');
+    });
+    it('renameSignal updates the name', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p' }] };
+        expect(model.renameSignal(doc, 0, 'clk2x')).to.equal(true);
+        expect(doc.signal[0].name).to.equal('clk2x');
+        expect(model.renameSignal(doc, 9, 'x')).to.equal(false);
+    });
+    it('moveSignal reorders rows', function () {
+        var doc = { signal: [{ name: 'a' }, {}, { name: 'b' }] };
+        expect(model.moveSignal(doc, 2, 0)).to.equal(true);
+        expect(doc.signal[0].name).to.equal('b');
+        expect(doc.signal[1]).to.deep.equal({ name: 'a' });
+        expect(doc.signal[2]).to.deep.equal({});
+    });
+    it('insertSeparator adds an empty row', function () {
+        var doc = { signal: [{ name: 'a', wave: 'p' }] };
+        model.insertSeparator(doc, 0);
+        expect(doc.signal[1]).to.deep.equal({});
+    });
+});
